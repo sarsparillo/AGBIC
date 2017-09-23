@@ -21,7 +21,8 @@ public class SpawnEnemies : MonoBehaviour {
 			if (coinFlip > 0) {
 				int enemyChoice = Random.Range(0, enemies.Length);
 				GameObject enemy = enemies[enemyChoice];
-				Instantiate(enemy, spawnPoints[i].position, Quaternion.identity);
+				GameObject thisEnemy = Instantiate(enemy, spawnPoints[i].position, Quaternion.identity) as GameObject;
+				thisEnemy.transform.parent = transform;
 				numEnemies++;
 			}
 		}

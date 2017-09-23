@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
 	void Start() {
 		room = GetComponentInParent<SpawnEnemies>();
 	}
+		
 
 	void OnDestroy() {
 		room.EnemyKilled();
