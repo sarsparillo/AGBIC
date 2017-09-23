@@ -8,12 +8,20 @@ public class PlayerController: MonoBehaviour {
 	[HideInInspector] public bool isJumping = false;
 	[HideInInspector] public bool isAttacking = false;
 
+	[Header("Camera")]
+	public GameObject gameCamera;
+
+	[Header("Level and Respawn Positions")]
+	public BoxCollider2D currentRoomBounds;
+	public Vector3 respawnPosition;
+	public float fallZone;
+
+	[Header("Movement Details")]
 	public float moveForce;
 	public float maxSpeed;
 	public float jumpForce;
-	public float airControl;
 	public float backDashDistance;
-	public float fallZone;
+	[Tooltip("Location of Y coordinate to do linecasting to read the ground position")]
 	public Transform groundCheck;
 
 	private bool playerHasLanded = false;
@@ -27,6 +35,7 @@ public class PlayerController: MonoBehaviour {
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody2D>();
 		currentSpeed = maxSpeed;
+		respawnPosition = transform.position;
 	}
 
 	void Update () {
@@ -92,7 +101,7 @@ public class PlayerController: MonoBehaviour {
 
 		// Respawn if dropped below map
 		if (transform.position.y < fallZone) {
-			transform.position = new Vector3(-52f, -8f, 0);
+			Respawn();
 		}
 			
 	}
@@ -149,10 +158,26 @@ public class PlayerController: MonoBehaviour {
 		anim.SetBool("Dashing", false);
 	}
 
+	void Respawn() {
+		transform.position = respawnPosition;
+	}
+
 	// if exited ground collider
 	void OnCollisionExit2D(Collision2D col) {
 		if (col.gameObject.CompareTag("Ground")) {
 			anim.SetBool("TouchingGround", false);
 		}
 	}
+
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.gameObject.CompareTag("LevelBox")) {
+			BoxCollider2D level = col.GetComponent<BoxCollider2D>();
+			gameCamera.GetComponent<MainCamera>().NewLevel(level);
+		}
+	}
+
+	public void UpdateRespawnPosition(Vector3 newPosition) {
+		respawnPosition = newPosition;
+	}
+
 }

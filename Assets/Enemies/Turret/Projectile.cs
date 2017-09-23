@@ -16,7 +16,6 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log("Hit " + col.name);
 		if (col.gameObject.CompareTag("Player")) {
 			Health health = col.gameObject.GetComponent<Health>();
 			health.DoDamage(damage);

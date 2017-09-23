@@ -30,7 +30,6 @@ public class SpawnEnemies : MonoBehaviour {
 
 	void Update() {
 		if (numEnemies < 1) {
-			Debug.Log("No more enemies");
 			door.GetComponent<Door>().OpenDoor();
 		}
 	}

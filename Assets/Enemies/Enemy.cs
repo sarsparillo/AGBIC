@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour {
 		room = GetComponentInParent<SpawnEnemies>();
 	}
 		
-
 	void OnDestroy() {
 		room.EnemyKilled();
 	}
