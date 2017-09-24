@@ -158,7 +158,7 @@ public class PlayerController: MonoBehaviour {
 		anim.SetBool("Dashing", false);
 	}
 
-	void Respawn() {
+	public void Respawn() {
 		transform.position = respawnPosition;
 	}
 

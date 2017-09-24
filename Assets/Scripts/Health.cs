@@ -7,10 +7,12 @@ public class Health : MonoBehaviour {
 	public float health;
 	private HealthBar healthBar;
 	private Animator anim;
+	private PlayerController player;
 
 	void Start() {
 		anim = GetComponent<Animator>();
 		healthBar = GetComponent<HealthBar>();
+		player = GetComponent<PlayerController>();
 	}
 
 	public void DoDamage(float damage) {
@@ -26,7 +28,14 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Die() {
-		Destroy(gameObject);
+		if (player) {
+			player.Respawn();
+			anim.SetTrigger("Respawn");
+			health = 100f;
+			healthBar.UpdateHealth(health);
+		} else {
+			Destroy(gameObject);
+		}
 	}
 
 }

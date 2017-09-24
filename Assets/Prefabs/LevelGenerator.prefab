@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7879ee1c3197b874e9bb24f377865a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsBetweenRespawnPoints: 2
+  roomsBetweenRespawnPoints: 5
   respawnRoom: {fileID: 1326048599985640, guid: b116f71efe686224d89bc48820e1e5c0,
     type: 2}
   rooms:

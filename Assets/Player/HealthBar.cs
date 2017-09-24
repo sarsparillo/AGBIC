@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour {
 
 	public void UpdateHealth(float health) {
 		healthText.text = health.ToString();
-		healthBar.value = health / 100;
+		healthBar.value = health / 100f;
 	}
 
 }

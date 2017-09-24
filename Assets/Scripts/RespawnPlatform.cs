@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class RespawnPlatform : MonoBehaviour {
 
-	public GameObject levelGenerator;
 	private Animator anim;
+	private SpawnManager roomManager;
 
 	void Start() {
 		anim = GetComponent<Animator>();
+		roomManager = GameObject.FindObjectOfType<SpawnManager>();
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.CompareTag("Player")) {
 			anim.SetTrigger("Activate");
-			levelGenerator.GetComponent<SpawnManager>().Spawn();
+			roomManager.Spawn();
 			col.gameObject.GetComponent<PlayerController>().UpdateRespawnPosition(transform.position);
 		}
 	}

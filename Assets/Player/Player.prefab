@@ -232,7 +232,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.34, y: 0.75}
+  m_Offset: {x: 0.09, y: 0.75}
   serializedVersion: 2
   m_Radius: 0.67
 --- !u!61 &61667107835366932
@@ -358,7 +358,7 @@ MonoBehaviour:
   isAttacking: 0
   gameCamera: {fileID: 0}
   currentRoomBounds: {fileID: 0}
-  respawnPosition: {fileID: 4734204918458024}
+  respawnPosition: {x: 0, y: 0, z: 0}
   fallZone: -22
   moveForce: 200
   maxSpeed: 6.5
