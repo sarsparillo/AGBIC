@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4042656754219086}
   - component: {fileID: 114664364735805948}
   - component: {fileID: 61254730653553756}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IntroCorridor
   m_TagString: LevelBox
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 60142337391566184}
   m_Layer: 12
   m_Name: Collision
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,8 +53,23 @@ GameObject:
   m_Component:
   - component: {fileID: 4348154314320896}
   - component: {fileID: 114544974125603722}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1377581924897070
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4186661777262000}
+  m_Layer: 13
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +86,7 @@ GameObject:
   - component: {fileID: 61063607187156594}
   - component: {fileID: 95641617262893918}
   - component: {fileID: 114603966671539948}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +101,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4836407279375642}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +121,7 @@ GameObject:
   - component: {fileID: 114352503234338020}
   m_Layer: 12
   m_Name: GrasslandSeparated
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4333855817379628}
   - component: {fileID: 212953665588429004}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Upper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +153,7 @@ GameObject:
   - component: {fileID: 33951208156654360}
   - component: {fileID: 23758634766594174}
   - component: {fileID: 114198792583157806}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Grassland2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4599610565878942}
   - component: {fileID: 212934672310967574}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Lower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4511604180108416}
   - component: {fileID: 114364766503589918}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +216,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4197860667772640}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +238,19 @@ Transform:
   - {fileID: 4348154314320896}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4186661777262000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1377581924897070}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 28.8, y: -17.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4348154314320896}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4197860667772640
 Transform:
@@ -261,8 +289,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4433561686677130}
-  - {fileID: 4836407279375642}
+  - {fileID: 4186661777262000}
   - {fileID: 4197860667772640}
+  - {fileID: 4836407279375642}
   m_Father: {fileID: 4042656754219086}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -341,7 +370,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1748611643956696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4450421822109998}
@@ -369,11 +398,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1467060302464536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.07, y: -17.57, z: 0}
+  m_LocalPosition: {x: 21.17, y: -14.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4348154314320896}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23460235247191704
 MeshRenderer:
@@ -461,7 +490,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1366853789331286}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 93a9ae9b75382bd4b90cb14dc40c3968, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -794,11 +823,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {fileID: 4836407279375642}
+  - {fileID: 4186661777262000}
   - {fileID: 4197860667772640}
+  - {fileID: 4836407279375642}
   enemies:
   - {fileID: 1143073810899350, guid: 5d17a56fb5ad5d548aa3fe61dd1c3b85, type: 2}
   - {fileID: 1976715408317910, guid: 9d2ace8e1cd9cd543b3279a415735ba9, type: 2}
+  - {fileID: 1671027825586964, guid: 50121bbf54b91f94bb1ea508396ea2e2, type: 2}
   numEnemies: 0
 --- !u!114 &114603966671539948
 MonoBehaviour:

@@ -5,7 +5,9 @@ using UnityEngine;
 public class Shoot : MonoBehaviour {
 
 	public GameObject[] projectiles;
-	public GameObject gun, target;
+	public GameObject gun;
+
+	public float rangeStart, rangeEnd;
 
 	private bool attacking;
 	private GameObject projectileParent;
@@ -20,23 +22,32 @@ public class Shoot : MonoBehaviour {
 	}
 	
 	void Update () {
-		RaycastHit2D seePlayer = Physics2D.Linecast(transform.position, target.transform.position, 1 << LayerMask.NameToLayer("Player"));
+
+		Vector2 target = transform.position;
+		Vector2 targetStart = transform.position;
+		target.x -= rangeEnd * transform.localScale.x;
+		targetStart.x -= rangeStart * transform.localScale.x;
+		Debug.DrawLine(targetStart, target, Color.yellow);
+		RaycastHit2D seePlayer = Physics2D.Linecast(targetStart, target, 1 << LayerMask.NameToLayer("Player"));
 		if (seePlayer.collider != null) {
 			if (seePlayer.collider.name == "Player") {
-				anim.SetBool("isAttacking", true);
+				anim.SetBool("Shooting", true);
 			} else {
-				anim.SetBool("isAttacking", false);
+				anim.SetBool("Shooting", false);
 			}
 		}
 	}
 
 	public void Fire(int numProjectiles) {
-		float direction = transform.position.x;
 		for (int i = 0; i < numProjectiles; i++) {
 			GameObject projectile = projectiles[Random.Range(0, projectiles.Length)];
 			GameObject bullet = Instantiate(projectile, gun.transform.position, Quaternion.identity) as GameObject;
 			bullet.transform.localScale = -transform.localScale;
 			bullet.transform.parent = projectileParent.transform;
 		}
+	}
+
+	void EndFiring() {
+		anim.SetBool("Shooting", false);
 	}
 }

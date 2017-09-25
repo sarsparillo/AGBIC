@@ -12,6 +12,11 @@ public class Boulders : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		rb.velocity = new Vector2(transform.localScale.x * (Random.Range(speed - 5f, speed + 5f)), 5f);
+		Invoke("TimeOut", 3f);
+	}
+
+	void TimeOut() {
+		DestroyBoulder();
 	}
 
 
@@ -19,11 +24,11 @@ public class Boulders : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
+	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.CompareTag("Player")) {
-			Health health = col.gameObject.GetComponent<Health>();
-			health.DoDamage(damage);
+			PlayerController player = col.gameObject.GetComponent<PlayerController>();
+			player.TakeHit(damage);
+			DestroyBoulder();
 		}
-		DestroyBoulder();
 	}
 }

@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1976715408317910}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.64, y: -18.41, z: -1}
+  m_LocalPosition: {x: -43.38687, y: -14.287922, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4940472077597554}
@@ -144,7 +144,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710319969503834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.43, y: 0, z: 0}
+  m_LocalPosition: {x: -0.52, y: 0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4513702547835244}
@@ -182,7 +182,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61779044499285864
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -250,7 +250,8 @@ MonoBehaviour:
   projectiles:
   - {fileID: 1867659638708278, guid: 36d24be31270d984e9bfa846359350c5, type: 2}
   gun: {fileID: 1710319969503834}
-  target: {fileID: 1227247066556702}
+  rangeStart: 0.8
+  rangeEnd: 15
 --- !u!114 &114844536431598966
 MonoBehaviour:
   m_ObjectHideFlags: 1

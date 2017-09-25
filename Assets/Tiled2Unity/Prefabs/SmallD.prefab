@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114377604000288772}
   m_Layer: 12
   m_Name: GrasslandSeparated
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 60362455583097296}
   m_Layer: 12
   m_Name: Collision
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -337,7 +337,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1386307136312876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.4, y: -55, z: 0}
+  m_LocalPosition: {x: 165.74411, y: -60.569138, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4537343861011430}
@@ -616,7 +616,7 @@ MonoBehaviour:
   - {fileID: 4439081043897944}
   enemies:
   - {fileID: 1143073810899350, guid: 5d17a56fb5ad5d548aa3fe61dd1c3b85, type: 2}
-  - {fileID: 1976715408317910, guid: 9d2ace8e1cd9cd543b3279a415735ba9, type: 2}
+  - {fileID: 1671027825586964, guid: 50121bbf54b91f94bb1ea508396ea2e2, type: 2}
   numEnemies: 0
 --- !u!114 &114985223789991866
 MonoBehaviour:

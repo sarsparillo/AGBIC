@@ -29,10 +29,10 @@ public class Health : MonoBehaviour {
 
 	public void Die() {
 		if (player) {
-			player.Respawn();
 			anim.SetTrigger("Respawn");
 			health = 100f;
 			healthBar.UpdateHealth(health);
+			player.Respawn();
 		} else {
 			Destroy(gameObject);
 		}

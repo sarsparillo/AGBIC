@@ -4,28 +4,38 @@ using UnityEngine;
 
 public class PlayerController: MonoBehaviour {
 
-	[HideInInspector] public bool facingRight = true;
-	[HideInInspector] public bool isJumping = false;
-	[HideInInspector] public bool isAttacking = false;
+	[Header("Gotta public these up because of bugs")]
+	public bool facingRight = true;
+	public bool isJumping = false;
+	public bool isAttacking = false;
+	public bool isDashing = false;
+	public bool isHit = false;
+	public bool playerHasLanded = false;
+
 
 	[Header("Camera")]
-	public GameObject gameCamera;
-
-	[Header("Level and Respawn Positions")]
-	public BoxCollider2D currentRoomBounds;
+	public MainCamera gameCamera;
+	public BoxCollider2D respawnRoom;
 	public Vector3 respawnPosition;
 	public float fallZone;
 
 	[Header("Movement Details")]
-	public float moveForce;
+	[Tooltip("Horizontal axis multiplier. Default to 200.")]
+	[Range(100,500)]
+	public float axisMultiplier;
+	[Tooltip("Maximum player speed. Default is 6.5")]
+	[Range(0,10)]
 	public float maxSpeed;
+	[Tooltip("Amount of force applied to the start of the jump. More force = more jump. Default is 1160")]
+	[Range(800,14000)]
 	public float jumpForce;
+	[Tooltip("Distance the player backdashes. Default is 12")]
+	[Range(0,20)]
 	public float backDashDistance;
-	[Tooltip("Location of Y coordinate to do linecasting to read the ground position")]
-	public Transform groundCheck;
+	[Tooltip("How much knockback when hit by an enemy")]
+	public float hitKnockbackVertical;
+	public float hitKnockbackHorizontal;
 
-	private bool playerHasLanded = false;
-	private bool isDashing = false;
 	private float currentSpeed;
 	private Animator anim;
 	private Rigidbody2D rb;
@@ -50,22 +60,32 @@ public class PlayerController: MonoBehaviour {
 		if (Input.GetButtonDown("Dash")) {
 			Dash();
 		}
-	}
 
-	void FixedUpdate() {
+		// if you haven't landed from a jump or fall, start running a check to see if you've made contact with the ground again
+		Vector2 groundCheck = transform.position;
+		groundCheck.y -= 0.1f;
+		Debug.DrawLine(transform.position, groundCheck, Color.cyan);
+
+		playerHasLanded = Physics2D.Linecast(transform.position, groundCheck, 1 << LayerMask.NameToLayer("Ground"));
+		if (playerHasLanded) {
+			anim.SetBool("TouchingGround", true);
+		} else {
+			anim.SetBool("TouchingGround", false);
+		}
+
 		float horizontalForce = Input.GetAxis("Horizontal");
 		anim.SetFloat("Speed", Mathf.Abs(horizontalForce));
 
 		// add directional force if not already at max speed
 		if (horizontalForce * rb.velocity.x < maxSpeed) {
 			if (!isDashing) {
-				rb.AddForce(Vector2.right * horizontalForce * moveForce);
+				rb.AddForce(Vector2.right * horizontalForce * axisMultiplier);
 			}
 		}
 
-		// directional force check, can't slide up hills
+		// directional force check, attempt to not let player slide up hills
 		if (rb.velocity.y > 0 && !isJumping) {
-			rb.AddForce(Vector2.right * -horizontalForce);
+			Debug.Log("Going Uphill");
 		}
 			
 
@@ -78,18 +98,8 @@ public class PlayerController: MonoBehaviour {
 
 		// speed trap!
 		if (Mathf.Abs(rb.velocity.x) > maxSpeed) {
-			// mathf.sign returns 1 if positive, -1 if negative, 
 			rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
 		}
-
-		// if you haven't landed from a jump or fall, start running a check to see if you've made contact with the ground again
-		playerHasLanded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-		if (!playerHasLanded) {
-			anim.SetBool("TouchingGround", false);
-		} else {
-			anim.SetBool("TouchingGround", true);
-		}
-
 
 		if (isDashing) {
 			if (facingRight) {
@@ -99,18 +109,27 @@ public class PlayerController: MonoBehaviour {
 			}
 		}
 
+		if (isHit) {
+			if (facingRight) {
+				rb.velocity = new Vector2(rb.velocity.x - hitKnockbackHorizontal, rb.velocity.y + hitKnockbackVertical);
+			} else {
+				rb.velocity = new Vector2(rb.velocity.x + hitKnockbackHorizontal, rb.velocity.y + hitKnockbackVertical);
+			}
+		}
+
 		// Respawn if dropped below map
 		if (transform.position.y < fallZone) {
 			Respawn();
 		}
+
 			
 	}
 
 	void Jump()	{
-		if (playerHasLanded && !isAttacking) {
-			isJumping = true;
+		if (playerHasLanded && !isAttacking && !isDashing) {
 			anim.SetTrigger("Jump");
-			rb.AddForce((transform.up) * jumpForce);
+			rb.AddForce(transform.up * jumpForce);
+			isJumping = true;
 		}
 	}
 
@@ -125,7 +144,7 @@ public class PlayerController: MonoBehaviour {
 	}
 
 	void Attack() {
-		if (!isAttacking && !isDashing) {
+		if (!isAttacking && !isDashing && !isHit) {
 			isAttacking = true;
 			if (playerHasLanded) {		
 				anim.SetTrigger("Attack");
@@ -144,7 +163,7 @@ public class PlayerController: MonoBehaviour {
 
 
 	void Dash() { 
-		if (!isAttacking && playerHasLanded && !isDashing) {
+		if (!isDashing && !isAttacking && playerHasLanded) {
 			isDashing = true;
 			isJumping = false;
 			anim.SetBool("Dashing", true);
@@ -158,26 +177,45 @@ public class PlayerController: MonoBehaviour {
 		anim.SetBool("Dashing", false);
 	}
 
-	public void Respawn() {
-		transform.position = respawnPosition;
-	}
-
-	// if exited ground collider
-	void OnCollisionExit2D(Collision2D col) {
-		if (col.gameObject.CompareTag("Ground")) {
-			anim.SetBool("TouchingGround", false);
+	public void TakeHit(float damage) {
+		if (!isDashing && !isHit) {
+			isHit = true;
+			isDashing = false;
+			isAttacking = false;
+			isJumping = false;
+			Health health = GetComponent<Health>();
+			health.DoDamage(damage);
 		}
 	}
+
+	void EndTakeHit() {
+		isHit = false;		
+	}
+
+	public void Respawn() {
+		transform.position = respawnPosition;
+		gameCamera.NewLevel(respawnRoom);
+		isHit = false;
+		isDashing = false;
+		isAttacking = false;
+		isJumping = false;
+	}
+
 
 	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.CompareTag("LevelBox")) {
 			BoxCollider2D level = col.GetComponent<BoxCollider2D>();
 			gameCamera.GetComponent<MainCamera>().NewLevel(level);
 		}
+		if (col.gameObject.CompareTag("Enemy")) {
+			Health health = GetComponent<Health>();
+			health.DoDamage(10f);
+		}
 	}
 
-	public void UpdateRespawnPosition(Vector3 newPosition) {
+	public void UpdateRespawnPosition(Vector3 newPosition, BoxCollider2D room) {
 		respawnPosition = newPosition;
+		respawnRoom = room;
 	}
 
 }
